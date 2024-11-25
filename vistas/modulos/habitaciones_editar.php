@@ -27,7 +27,7 @@ if ($habitacion) {
                         <div class="col-6">
                             <div class="mb-1 col-8 mx-auto">
                                 <label for="numero" class="form-label">Número de Habitación</label>
-                                <input type="text" id="numero" name="numero" class="form-control" tabindex="1" placeholder="Número de Habitación"
+                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="numero" name="numero" class="form-control" tabindex="1" placeholder="Número de Habitación"
                                     value="<?php echo $habitacion["numero"]; ?>" required>
                             </div>
                             <div class="mb-1 col-8 mx-auto">
