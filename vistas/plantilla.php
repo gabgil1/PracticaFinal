@@ -1,5 +1,5 @@
 <?php
-// session_start();
+ session_start();
 $url = ControladorPlantilla::url();
 ?>
 
@@ -7,7 +7,7 @@ $url = ControladorPlantilla::url();
 <html lang="es">
 
 <head>
-
+    <?php if (isset($_SESSION["iniciarSesion"])) { ?>
     <meta charset="utf-8" />
     <title>Gestión de reservas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -137,11 +137,16 @@ $url = ControladorPlantilla::url();
 
 </body>
 
-<!-- <//?php } else {
-    include "vistas/modulos/login.php";
-}
+<?php } else {
+     // Sistema para mostrar login o signup según la URL.
+        if (isset($_GET["pagina"]) && $_GET["pagina"] === "signup") {
+            include "vistas/modulos/signup.php";
+        } else {
+            include "vistas/modulos/login.php";
+        }
+    }
 
-?> -->
+?> 
 
 
 

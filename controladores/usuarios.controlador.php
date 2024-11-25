@@ -3,50 +3,95 @@
 class ControladorUsuarios
 {
     /*=============================================
-INGRESO DE USUARIO
-=============================================*/
-//     static public function ctrIngresoUsuario()
-//     {
-// //         if (isset($_POST["email"])) {
+    INGRESO DE USUARIO
+    =============================================*/
+    static public function ctrIngresoUsuario()
+    {
+        // Iniciar la sesión si no está iniciada
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-// //             if (preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][azA-Z0-9_]+)*[.][a-zAZ]{2,4}$/', $_POST["email"])) {
+        if (isset($_POST["email"]) && isset($_POST["contra"])) {
+            // Validar el formato del email
+            if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+                $item = "email";
+                $valor = $_POST["email"];
+                $respuesta = ModeloUsuarios::mdlMostrarUsuarios($item, $valor);
 
-// //                 $encriptar = crypt(trim($_POST["password"]), '$2a$07$tawfdgyaufiusdgopfhgjxerctyuniexrcvrdtfyg$');
+                if ($respuesta && password_verify(trim($_POST["contra"]), $respuesta["contrasena"])) {
+                    // Establecer variables de sesión
+                    $_SESSION["iniciarSesion"] = "ok";
+                    $_SESSION["id_usuario"] = $respuesta["id_usuario"];
+                    $_SESSION["nombre"] = $respuesta["nombre"];
+                    $_SESSION["apellido"] = $respuesta["apellido"];
+                    $_SESSION["email"] = $respuesta["email"];
 
-// //                 $item = "email";
+                    // Redirigir al home
+                    header('Location: ' . ControladorPlantilla::url() . 'home');
+                    exit;
+                } else {
+                    echo '<div class="alert alert-danger mt-3" role="alert">
+                        Usuario o contraseña incorrectos
+                    </div>';
+                }
+            } else {
+                echo '<div class="alert alert-danger mt-3" role="alert">
+                    Formato de email no válido
+                </div>';
+            }
+        }
+    }
 
-// //                 $valor = $_POST["email"];
-// //                 $respuesta = ModeloUsuarios::mdlMostrarUsuarios(
-// //                     $item,
-// //                     $valor
-// //                 );
+    /*=============================================
+    REGISTRO DE USUARIO
+    =============================================*/
+    static public function ctrRegistrarUsuario()
+    {
+        if (isset($_POST["email"]) && isset($_POST["contra"]) && isset($_POST["usuario"])) {
+                $tabla = "usuarios";
 
-// //                 if (is_array($respuesta) && ($respuesta["email"] ==
-// //                     $_POST["email"] && $respuesta["password"] == $encriptar)) {
+                // Encriptar la contraseña
+                $contra_encriptada = password_hash(trim($_POST["contra"]), PASSWORD_DEFAULT);
 
-// //                     echo '<script>
-// //                         fncSweetAlert("loading", "Ingresando..", "")
-// //                         </script>';
+                $datos = array(
+                    "usuario" => $_POST["usuario"],
+                    "contrasena" => $contra_encriptada,
+                    "email" => $_POST["email"],
+                    "nombre" => $_POST["nombre"],
+                    "apellido" => $_POST["apellido"]
+                );
 
-// //                     $_SESSION["iniciarSesion"] = "ok";
-// //                     $_SESSION["id_usuario"] = $respuesta["id_usuario"];
-// //                     $_SESSION["nombre"] = $respuesta["nombre"];
+                $respuesta = ModeloUsuarios::mdlAgregarUsuarios($tabla, $datos);
 
-// //                     echo '<script>
-// //                     window.location = "home";
-// //                     </script>';
-// //                 } else {
-// //                     echo '<div class="alert alert-danger mt-3" role="alert">
-// // Error al intentar acceder
-// // </div>
-// //                     ';
-// //                 }
-// //             }
-// //         }
-// //     }
+                if ($respuesta == "ok") {
+                    echo '<script>
+                        Swal.fire({
+                            icon: "success",
+                            title: "Usuario registrado correctamente",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        window.location = "' . ControladorPlantilla::url() . 'login";
+                    </script>';
+                } else {
+                    echo '<div class="alert alert-danger mt-3" role="alert">
+                        Error al registrar el usuario
+                    </div>';
+                }
+            } else {
+                echo '<div class="alert alert-danger mt-3" role="alert">
+                    Formato de email no válido
+                </div>';
+            }
+        }
+
+    /*=============================================
+    MOSTRAR USUARIOS
+    =============================================*/
     static public function ctrMostrarUsuarios($item, $valor)
     {
-        $respuesta = ModeloUsuarios::mdlMostrarUsuarios($item, $valor);
-        return $respuesta;
+        return ModeloUsuarios::mdlMostrarUsuarios($item, $valor);
     }
 }
+?>
