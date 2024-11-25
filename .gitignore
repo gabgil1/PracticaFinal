@@ -1,0 +1,11 @@
+apuntes.txt
+ModulosHechos.md
+sistema_db.sql
+vistas/modulos/vercheckin.php
+vistas/modulos/reservasnotas.txt
+vistas/modulos/clientes_agregar.php
+vistas/modulos/clientes_editar.php
+vistas/modulos/clientes.php
+
+modelos/clientes.modelo.php
+controladores/clientes.controlador.php
