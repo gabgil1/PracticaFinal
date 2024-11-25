@@ -1,6 +1,6 @@
 <?php
 
-$entrenador = ControladorEntrenadores::ctrMostrarEntrenadores(null, null);
+$tipos = ControladorUsuarios::ctrMostrarTipoUsuario();
 
 // print_r($entrenador); verifica si vienen datos 
 // return; corta la ejecucion
@@ -16,8 +16,8 @@ $entrenador = ControladorEntrenadores::ctrMostrarEntrenadores(null, null);
         <div class="card-body">
             <form method="POST">
                 <div class="mb-1 col-4 mx-auto">
-                    <label for="codigo" class="form-label">Código</label>
-                    <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Código"
+                    <label for="usuario" class="form-label">Usuario</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="usuario"
                         value="" required>
                 </div>
                 <div class="mb-1 col-4 mx-auto">
@@ -26,41 +26,33 @@ $entrenador = ControladorEntrenadores::ctrMostrarEntrenadores(null, null);
                         value="" required>
                 </div>
                 <div class="mb-1 col-4 mx-auto">
-                    <label for="descripcion" class="form-label">Descripción</label>
-                    <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción"
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="apellido"
                         value="" required>
                 </div>
                 <div class="mb-1 col-4 mx-auto">
-                    <label for="duracion" class="form-label">Duración(semanas)</label>
-                    <input type="text" id="duracion" name="duracion" class="form-control" placeholder="Duración(semanas)"
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="email"
                         value="" required>
                 </div>
                 <div class="mb-1 col-4 mx-auto">
-                    <label for="cantidad_sesiones" class="form-label">Cantidad de sesiones</label>
-                    <input type="text" id="cantidad_sesiones" name="cantidad_sesiones" class="form-control" placeholder="Cantidad de sesiones"
+                    <label for="contra" class="form-label">Contraseña</label>
+                    <input type="password" id="contra" name="contra" class="form-control" placeholder="************"
                         value="" required>
                 </div>
                 <div class="mb-1 col-4 mx-auto">
-                    <label for="id_entrenador" class="form-label">Entrenador</label>
-                    <select class="form-select" name="id_entrenador" id="example-select" required>
-                        <option value="">Selecciona un entrenador</option>
-                        <?php foreach ($entrenador as $es => $value) { ?>
-                            <option value="<?php echo (int)$value["id_entrenador"]; ?>"><?php echo $value["nombre_entrenador"]; ?></option>
+                    <label for="tipo" class="form-label">Tipo de usuario</label>
+                    <select class="form-select" name="tipo" id="tipo">
+                        <option value="">Selecciona un Tipo</option>
+                        <?php foreach ($tipos as $es => $value) { ?>
+                            <option value="<?php echo (int)$value["id_tipo"]; ?>"><?php echo $value["nombre"]; ?></option>
                         <?php } ?>
                     </select>
                 </div>
-                <div class="mb-1 col-4 mx-auto">
-                    <label for="estado" class="form-label">Estado</label>
-                    <select class="form-select" name="estado" id="example-select" required>
-                        <option value="1">Activo</option>
-                        <option value="0">Inactivo</option>
-                    </select>
-                </div>
-
                 <?php
 
-                $agregar = new ControladorPlanes();
-                $agregar->ctrAgregarPlan();
+                $agregar = new ControladorUsuarios();
+                $agregar->ctrAgregarUsuario();
                 ?>
 
                 <div class="mt-2 col-4 mx-auto text-center">

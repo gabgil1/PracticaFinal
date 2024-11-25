@@ -26,6 +26,7 @@ class ControladorUsuarios
                     $_SESSION["nombre"] = $respuesta["nombre"];
                     $_SESSION["apellido"] = $respuesta["apellido"];
                     $_SESSION["email"] = $respuesta["email"];
+                    $_SESSION["tipo_usuario"] = $respuesta["tipo_usuario"];
 
                     // Redirigir al home
                     header('Location: ' . ControladorPlantilla::url() . 'home');
@@ -43,6 +44,40 @@ class ControladorUsuarios
         }
     }
 
+    static public function ctrAgregarUsuario()
+    {
+        if (isset($_POST["email"]) && isset($_POST["contra"]) && isset($_POST["usuario"])) {
+                $tabla = "usuarios";
+
+                // Encriptar la contraseña
+                $contra_encriptada = password_hash(trim($_POST["contra"]), PASSWORD_DEFAULT);
+
+                $datos = array(
+                    "usuario" => $_POST["usuario"],
+                    "contrasena" => $contra_encriptada,
+                    "email" => $_POST["email"],
+                    "nombre" => $_POST["nombre"],
+                    "apellido" => $_POST["apellido"],
+                    "tipo_usuario" => $_POST["tipo"]
+                );
+
+                $respuesta = ModeloUsuarios::mdlAgregarUsuarios($tabla, $datos);
+
+                if ($respuesta == "ok") {
+                    header('Location: ' . ControladorPlantilla::url() . 'usuarios');
+                    exit;
+                } else {
+                    echo '<div class="alert alert-danger mt-3" role="alert">
+                        Error al registrar el usuario
+                    </div>';
+                }
+            } else {
+                echo '<div class="alert alert-danger mt-3" role="alert">
+                    Formato de email no válido
+                </div>';
+            }
+        }
+
     /*=============================================
     REGISTRO DE USUARIO
     =============================================*/
@@ -59,21 +94,15 @@ class ControladorUsuarios
                     "contrasena" => $contra_encriptada,
                     "email" => $_POST["email"],
                     "nombre" => $_POST["nombre"],
-                    "apellido" => $_POST["apellido"]
+                    "apellido" => $_POST["apellido"],
+                    "tipo_usuario" => $_POST["tipo"]
                 );
 
                 $respuesta = ModeloUsuarios::mdlAgregarUsuarios($tabla, $datos);
 
                 if ($respuesta == "ok") {
-                    echo '<script>
-                        Swal.fire({
-                            icon: "success",
-                            title: "Usuario registrado correctamente",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        window.location = "' . ControladorPlantilla::url() . 'login";
-                    </script>';
+                    header('Location: ' . ControladorPlantilla::url() . 'login');
+                    exit;
                 } else {
                     echo '<div class="alert alert-danger mt-3" role="alert">
                         Error al registrar el usuario
@@ -92,6 +121,11 @@ class ControladorUsuarios
     static public function ctrMostrarUsuarios($item, $valor)
     {
         return ModeloUsuarios::mdlMostrarUsuarios($item, $valor);
+    }
+
+    static public function ctrMostrarTipoUsuario()
+    {
+        return ModeloUsuarios::mdlMostrarTipoUsuario();
     }
 }
 ?>
