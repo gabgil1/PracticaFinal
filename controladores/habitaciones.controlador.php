@@ -51,15 +51,9 @@ class ControladorHabitaciones
         if (isset($_POST["nombre"])) {
 
             $datos = array(
-                "nombre" => $_POST["nombre"],
-                "apellido" => $_POST["apellido"],
-                "dni" => $_POST["dni"],
-                "fecha_nacimiento" => $_POST["fecha_nacimiento"],
-                "direccion" => $_POST["direccion"],
-                "telefono" => $_POST["telefono"],
-                "email" => $_POST["email"],
-                "id_plan" => $_POST["id_plan"],
-                "fecha_inscripcion" => $_POST["fecha_inscripcion"],
+                "numero" => $_POST["numero"],
+                "tarifa" => $_POST["tarifa"],
+                "id_tipoHab" => $_POST["id_tipoHabitacion"],
                 "estado" => $_POST["estado"]
             );
             $url = ControladorPlantilla::url() . "habitaciones";

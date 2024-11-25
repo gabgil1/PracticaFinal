@@ -44,17 +44,11 @@ class ModeloHabitaciones
     {
 
         try {
-            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, apellido, dni, fecha_nacimiento, direccion, telefono, email, fecha_inscripcion, id_plan, estado)VALUES(:nombre, :apellido, :dni, :fecha_nacimiento, :direccion, :telefono, :email, :fecha_inscripcion, :id_plan, :estado)");
+            $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(numero, tarifa, id_tipoHabitacion, estado)VALUES(:numero, :tarifa, :id_tipoHabitacion,:estado)");
 
-            $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-            $stmt->bindParam(":apellido", $datos["apellido"], PDO::PARAM_STR);
-            $stmt->bindParam(":dni", $datos["dni"], PDO::PARAM_STR);
-            $stmt->bindParam(":fecha_nacimiento", $datos["fecha_nacimiento"], PDO::PARAM_STR);
-            $stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
-            $stmt->bindParam(":telefono", $datos["telefono"], PDO::PARAM_STR);
-            $stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
-            $stmt->bindParam(":fecha_inscripcion", $datos["fecha_inscripcion"], PDO::PARAM_STR);
-            $stmt->bindParam(":id_plan", $datos["id_plan"], PDO::PARAM_INT);
+            $stmt->bindParam(":numero", $datos["numero"], PDO::PARAM_STR);
+            $stmt->bindParam(":tarifa", $datos["tarifa"], PDO::PARAM_STR);
+            $stmt->bindParam(":id_tipoHabitacion", $datos["id_tipoHabitacion"], PDO::PARAM_INT);
             $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_INT);
 
             // echo "<pre>";
