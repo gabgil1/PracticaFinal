@@ -24,6 +24,7 @@ $cantidad = count($habitaciones);
                     <table id="datatable" class="table table-bordered table-striped dt-responsive table-responsive nowrap">
                         <thead>
                             <tr>
+                                <th class="text-center">ID</th>
                                 <th class="text-center">Numero</th>
                                 <th class="text-center">Tipo de habitación</th>
                                 <th class="text-center">Cantidad de pasajeros</th>
@@ -38,6 +39,7 @@ $cantidad = count($habitaciones);
                             foreach ($habitaciones as $key => $value) {
                             ?>
                                 <tr style="background-color:#000888">
+                                    <td class="text-center"> <?php echo $value["id_habitaciones"] ?></td>
                                     <td class="text-center"> <?php echo $value["numero"] ?></td>
                                     <td class="text-center"> <?php echo $value["tipo"] ?> </td>
                                     <td class="text-center"> <?php echo $value["cantidad_pax"] ?></td>
@@ -61,11 +63,13 @@ $cantidad = count($habitaciones);
                                         ?>
                                     </td>
 
-                                    <td class="text-center"><a href="habitaciones_editar/<?php echo $value["id_habitaciones"] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                    <td class="text-center"><a href="habitaciones_editar/<?php echo $value['id_habitaciones'] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
 
                                         <button
-                                            class="btn btn-danger btnEliminar" data-id="<?php echo $value["id_habitaciones"]; ?>" data-modulo="habitacion"
-                                            id_habitacion=<?php echo $value["id_habitaciones"]; ?>><i class="fas fa-trash"></i></button>
+                                            class="btn btn-danger btnEliminar"
+                                            data-id="<?php echo $value["id_habitaciones"]; ?>"
+                                            data-modulo="habitacion"
+                                            id_habitaciones="<?php echo $value["id_habitaciones"]; ?>"><i class="fas fa-trash"></i></button>
                                     </td>
 
 

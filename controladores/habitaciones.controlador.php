@@ -48,12 +48,12 @@ class ControladorHabitaciones
 
         $tabla = "habitaciones";
 
-        if (isset($_POST["nombre"])) {
+        if (isset($_POST["numero"])) {
 
             $datos = array(
                 "numero" => $_POST["numero"],
                 "tarifa" => $_POST["tarifa"],
-                "id_tipoHab" => $_POST["id_tipoHabitacion"],
+                "id_tipoHabitacion" => $_POST["id_tipoHab"],
                 "estado" => $_POST["estado"]
             );
             $url = ControladorPlantilla::url() . "habitaciones";
@@ -71,12 +71,13 @@ class ControladorHabitaciones
     }
     static public function ctrEliminarHabitacion()
     {
+        if (isset($_GET["habitacion"])) {
 
-        if (isset($_GET["id_habitacion"])) {
+            $url = ControladorPlantilla::url() . "habitaciones";
+            $tabla = "habitaciones";
+            $dato = $_GET["habitacion"];
 
-            $url = ControladorPlantilla::url() . "habitacion";
-            $tabla = "habitacion";
-            $dato = $_GET["id_habitacion"];
+            print_r($dato);
 
             $respuesta = ModeloHabitaciones::mdlEliminarHabitacion($tabla, $dato);
 

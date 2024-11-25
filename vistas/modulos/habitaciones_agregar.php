@@ -54,7 +54,7 @@ $tipo = ControladorHabitaciones::ctrMostrarTipoHabitacion(null, null);
                         <a href="<?php echo $url; ?>/index.php?pagina=habitaciones" class="btn btn-secondary">
                             <i class="fa-solid fa-arrow-left"></i> Regresar
                         </a>
-                        <button class="btn btn-info btnEditaHabitacion justify-content-center" type="submit" tabindex="16"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                        <button class="btn btn-info btnEditaHabitacion justify-content-center" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                     </div>
 
             </form>

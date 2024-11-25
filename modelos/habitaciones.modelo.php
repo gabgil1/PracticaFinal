@@ -101,10 +101,11 @@ class ModeloHabitaciones
             // return "Error: " . $e->getMessage();
         }
     }
+
     static public function mdlEliminarHabitacion($tabla, $dato)
     {
         try {
-            $habitacion = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_habitacion = :id_habitacion");
+            $habitacion = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_habitaciones = :id_habitacion");
 
             $habitacion->bindParam(":id_habitacion", $dato, PDO::PARAM_INT);
 
