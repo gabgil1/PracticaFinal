@@ -123,4 +123,20 @@ class ModeloHabitaciones
             return "Error: " . $e->getMessage();
         }
     }
+    static public function mdlMostraTipoHabitacion($item = null, $valor = null)
+    {
+        try {
+            if ($item != null) {
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM tipo_habitaciones WHERE $item = :$item");
+                $stmt->bindParam(":" . $item, $valor, PDO::PARAM_INT);
+            } else {
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM tipo_habitaciones");
+            }
+
+            $stmt->execute();
+            return $item != null ? $stmt->fetch(PDO::FETCH_ASSOC) : $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return "Error: " . $e->getMessage();
+        }
+    }
 }

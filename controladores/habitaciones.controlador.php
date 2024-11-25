@@ -93,4 +93,10 @@ class ControladorHabitaciones
             }
         }
     }
+
+    static public function ctrMostrarTipoHabitacion($item, $valor)
+    {
+        $respuesta = ModeloHabitaciones::mdlMostraTipoHabitacion($item, $valor);
+        return $respuesta;
+    }
 }

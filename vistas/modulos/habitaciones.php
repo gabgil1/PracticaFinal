@@ -15,7 +15,7 @@ $cantidad = count($habitaciones);
             <h1 class="text-center mt-3">Habitaciones</h1>
 
             <div class="card-header">
-                <a href="clientes_agregar" class="btn btn-info">Agregar</a>
+                <a href="habitaciones_agregar" class="btn btn-info">Agregar</a>
             </div><!-- end card header -->
 
             <?php if ($cantidad > 0) { ?>
@@ -89,7 +89,7 @@ $cantidad = count($habitaciones);
 
 <?php
 
-$eliminar = new ControladorClientes();
-$eliminar->ctrEliminarCliente();
+$eliminar = new ControladorHabitaciones();
+$eliminar->ctrEliminarHabitacion();
 
 ?>

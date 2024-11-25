@@ -5,8 +5,11 @@ $item = "id_habitaciones";
 $valor = $rutas[1];
 
 $habitacion = ControladorHabitaciones::ctrMostrarHabitaciones($item, $valor);
+$tipoHabitacion = ControladorHabitaciones::ctrMostrarTipoHabitacion(null, null);
 
-print_r($habitacion);
+// print_r($tipoHabitacion);
+// return;
+// print_r($habitacion);
 
 if ($habitacion) {
 ?>
@@ -15,10 +18,10 @@ if ($habitacion) {
         <div class="card">
 
             <div class="card-header mx-auto">
-                <h2 class="mb-0">Editar habitación <img src="<?php echo $url; ?>vistas/assets/img/mancuerna.png" alt="Editar habitación" style="margin-left: 20px; width: 100px; vertical-align: middle;"></h2>
+                <h2 class="mb-0">Editar habitación <img src="<?php echo $url; ?>vistas/assets/img/habitacion.png" alt="Editar habitación" style="margin-left: 20px; width: 100px; vertical-align: middle;"></h2>
             </div><!-- end card header -->
 
-            <div class="card-body">
+            <div class="card-body   ">
                 <form method="POST">
                     <div class="row container-fluid">
                         <div class="col-6">
@@ -33,11 +36,13 @@ if ($habitacion) {
                                     value="<?php echo $habitacion["tarifa"]; ?>" required>
                             </div>
                             <div class="mb-1 col-8 mx-auto">
-                                <label for="id_plan" class="form-label">Plan</label>
-                                <select class="form-select" tabindex="11" name="id_plan" id="example-select" required>
-                                    <?php foreach ($plan as $es => $value) { ?>
-                                        <option value="<?php echo (int)$value["id_plan"]; ?>"><?php echo $value["nombre"];
-                                                                                                "selected"; ?></option>
+                                <label for="id_tipoHab" class="form-label">Tipo de habitación</label>
+                                <select class="form-select" tabindex="11" name="id_tipoHab" id="example-select" required>
+                                    <?php foreach ($tipoHabitacion as $es => $valor) { ?>
+                                        <option value="<?php echo (int)$value["id_tipoHab"]; ?>"
+                                            <?php echo ($habitacion["id_tipoHabitacion"] == $valor["id_tipoHab"]) ? 'selected' : ''; ?>>
+                                            <?php echo $valor["descripcion"]; ?>
+                                        </option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -54,7 +59,7 @@ if ($habitacion) {
 
 
                     <div class="mb-3 col-4 mx-auto text-center">
-                        <a href="<?php echo $url; ?>/index.php?pagina=clientes" class="btn btn-secondary">
+                        <a href="<?php echo $url; ?>/index.php?pagina=habitaciones" class="btn btn-secondary">
                             <i class="fa-solid fa-arrow-left"></i> Regresar
                         </a>
                         <button class="btn btn-info btnEditaCliente justify-content-center" type="submit" tabindex="17"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
@@ -72,5 +77,5 @@ if ($habitacion) {
     </div>
 
 <?php } else { ?>
-    <h3>Cliente no disponible</h3>
+    <h3>Habitación no disponible</h3>
 <?php } ?>
