@@ -65,27 +65,16 @@ class ModeloHabitaciones
     {
         $stmt = null;
         try {
-            $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, dni = :dni, fecha_nacimiento = :fecha_nacimiento, direccion = :direccion, telefono = :telefono, email = :email, fecha_inscripcion = :fecha_inscripcion, id_plan = :id_plan, estado = :estado WHERE id_cliente = :id_cliente");
-            // $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, apellido = :apellido, dni = :dni, fecha_nacimiento = :fecha_nacimiento, direccion = :direccion, telefono = :telefono, email = :email, id_plan = :id_plan, fecha_inscripcion = :fecha_inscripcion, estado = :estado WHERE id_cliente = :id_cliente");
+            $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET numero = :numero, tarifa = :tarifa, id_tipoHabitacion = :id_tipoHabitacion, estado = :estado WHERE id_habitaciones = :id_habitaciones");
 
-            $stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
-            $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-            $stmt->bindParam(":apellido", $datos["apellido"], PDO::PARAM_STR);
-            $stmt->bindParam(":dni", $datos["dni"], PDO::PARAM_STR);
-            $stmt->bindParam(":fecha_nacimiento", $datos["fecha_nacimiento"], PDO::PARAM_STR);
-            $stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
-            $stmt->bindParam(":telefono", $datos["telefono"], PDO::PARAM_STR);
-            $stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
-            $stmt->bindParam(":id_plan", $datos["id_plan"], PDO::PARAM_STR);
-            $stmt->bindParam(":fecha_inscripcion", $datos["fecha_inscripcion"], PDO::PARAM_STR);
+            $stmt->bindParam(":id_habitaciones", $datos["id_habitaciones"], PDO::PARAM_INT);
+            $stmt->bindParam(":numero", $datos["numero"], PDO::PARAM_STR);
+            $stmt->bindParam(":tarifa", $datos["tarifa"], PDO::PARAM_STR);
+            $stmt->bindParam(":id_tipoHabitacion", $datos["id_tipoHabitacion"], PDO::PARAM_INT);
             $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_INT);
 
-            // echo "<pre>";
-            // print_r($datos);
-            // echo "</pre>";
-            // return;
 
-            $stmt->execute();
+
             if ($stmt->execute()) {
                 return "ok";
             } else {
@@ -97,8 +86,7 @@ class ModeloHabitaciones
             } else {
                 echo "Error al preparar la consulta: " . $e->getMessage();
             }
-            return "error";
-            // return "Error: " . $e->getMessage();
+            return "error" . $e->getMessage();
         }
     }
 

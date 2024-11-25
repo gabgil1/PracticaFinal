@@ -29,7 +29,7 @@ $tipo = ControladorHabitaciones::ctrMostrarTipoHabitacion(null, null);
                         </div>
                         <div class="mb-1 col-8 mx-auto">
                             <label for="id_tipoHab" class="form-label">Tipo de habitación</label>
-                            <select class="form-select" tabindex="11" name="id_tipoHab" id="example-select" required>
+                            <select class="form-select" name="id_tipoHab" id="example-select" required>
                                 <option value="">Selecciona un tipo de habitación</option>
                                 <?php foreach ($tipo as $es => $value) { ?>
                                     <option value="<?php echo (int)$value["id_tipoHab"]; ?>"><?php echo $value["descripcion"]; ?></option>

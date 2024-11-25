@@ -36,19 +36,18 @@ if ($habitacion) {
                                     value="<?php echo $habitacion["tarifa"]; ?>" required>
                             </div>
                             <div class="mb-1 col-8 mx-auto">
-                                <label for="id_tipoHab" class="form-label">Tipo de habitación</label>
-                                <select class="form-select" tabindex="11" name="id_tipoHab" id="example-select" required>
+                                <label for="id_tipoHabitaciones" class="form-label">Tipo de habitación</label>
+                                <select class="form-select" tabindex="11" name="id_tipoHabitaciones" id="example-select" required>
                                     <?php foreach ($tipoHabitacion as $es => $valor) { ?>
-                                        <option value="<?php echo (int)$value["id_tipoHab"]; ?>"
-                                            <?php echo ($habitacion["id_tipoHabitacion"] == $valor["id_tipoHab"]) ? 'selected' : ''; ?>>
-                                            <?php echo $valor["descripcion"]; ?>
+                                        <option value="<?php echo (int)$valor["id_tipoHab"]; ?>"><?php echo $valor["descripcion"];
+                                                                                                    "selected"; ?>
                                         </option>
                                     <?php } ?>
                                 </select>
                             </div>
                             <div class="mb-1 col-8 mx-auto">
                                 <label for="estado" class="form-label">Estado</label>
-                                <select class="form-select" tabindex="16" name="estado" id="example-select" required>
+                                <select class="form-select" " name=" estado" id="example-select" required>
                                     <option value="1" <?php if ($habitacion["estado"] == 1) echo 'selected'; ?>>Activo</option>
                                     <option value="0" <?php if ($habitacion["estado"] == 0) echo 'selected'; ?>>Inactivo</option>
                                 </select>

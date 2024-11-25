@@ -12,19 +12,13 @@ class ControladorHabitaciones
     public function ctrEditarHabitaciones()
     {
         $tabla = "habitaciones";
-        if (isset($_POST["id_habitacion"])) {
+        if (isset($_POST["id_habitaciones"])) {
             $datos = array(
-                "nombre" => $_POST["nombre"],
-                "apellido" => $_POST["apellido"],
-                "dni" => $_POST["dni"],
-                "fecha_nacimiento" => $_POST["fecha_nacimiento"],
-                "direccion" => $_POST["direccion"],
-                "telefono" => $_POST["telefono"],
-                "email" => $_POST["email"],
-                "id_plan" => $_POST["id_plan"],
-                "fecha_inscripcion" => $_POST["fecha_inscripcion"],
+                "numero" => $_POST["numero"],
+                "tarifa" => $_POST["tarifa"],
+                "id_tipoHabitacion" => $_POST["id_tipoHabitaciones"],
                 "estado" => $_POST["estado"],
-                "id_cliente" => $_POST["id_cliente"]
+                "id_habitaciones" => $_POST["id_habitaciones"]
 
             );
 

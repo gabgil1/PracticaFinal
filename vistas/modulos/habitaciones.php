@@ -2,9 +2,9 @@
 
 $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones(null, null);
 
-// // echo "<pre>";
+// echo "<pre>";
 // print_r($habitaciones);
-// // echo "</pre>";
+// echo "</pre>";
 
 $cantidad = count($habitaciones);
 
@@ -24,7 +24,6 @@ $cantidad = count($habitaciones);
                     <table id="datatable" class="table table-bordered table-striped dt-responsive table-responsive nowrap">
                         <thead>
                             <tr>
-                                <th class="text-center">ID</th>
                                 <th class="text-center">Numero</th>
                                 <th class="text-center">Tipo de habitación</th>
                                 <th class="text-center">Cantidad de pasajeros</th>
@@ -39,7 +38,6 @@ $cantidad = count($habitaciones);
                             foreach ($habitaciones as $key => $value) {
                             ?>
                                 <tr style="background-color:#000888">
-                                    <td class="text-center"> <?php echo $value["id_habitaciones"] ?></td>
                                     <td class="text-center"> <?php echo $value["numero"] ?></td>
                                     <td class="text-center"> <?php echo $value["tipo"] ?> </td>
                                     <td class="text-center"> <?php echo $value["cantidad_pax"] ?></td>
