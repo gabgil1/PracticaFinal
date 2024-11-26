@@ -42,7 +42,27 @@ $cantidad = count($habitaciones);
                                     <td class="text-center"> <?php echo $value["tipo"] ?> </td>
                                     <td class="text-center"> <?php echo $value["cantidad_pax"] ?></td>
                                     <td class="text-center"> $ <?php echo $value["tarifa"] ?></td>
-                                    <td class="text-center"> <?php echo $value["estado"] ?>
+                                    <td class="text-center"
+                                        <?php
+                                        // Aca se muestra el estado con texto
+                                        if ($value["estado"] == 1) {
+                                            echo "style='background-color: #77a345; color: #FFFFFF'; font-weight: bold;";
+                                        } elseif ($value["estado"] == 2) {
+                                            echo "style='background-color: #d90202; color: #FFFFFF; font-weight: bold;'";
+                                        } else {
+                                            echo "style='background-color: #f2fa05';";
+                                        }
+                                        ?>>
+                                        <?php
+                                        // Aca se muestra el estado con texto
+                                        if ($value["estado"] == 1) {
+                                            echo "Disponible";
+                                        } elseif ($value["estado"] == 2) {
+                                            echo "No disponible";
+                                        } else {
+                                            echo "En Mantenimiento";
+                                        }
+                                        ?>
 
                                     </td>
 
