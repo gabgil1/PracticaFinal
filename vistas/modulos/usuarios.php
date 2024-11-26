@@ -1,6 +1,5 @@
 <?php
 $usuarios = ControladorUsuarios::ctrMostrarUsuarios(null, null);
-
 $cantidad = count($usuarios);
 ?>
 <div class="row">
@@ -40,7 +39,7 @@ $cantidad = count($usuarios);
                                     <td class="text-center"> <?php echo str_repeat('*', 5) ?></td> <!--oculta la contraseña y la limita a 5 *-->
                                     <td class="text-center"> <?php echo $value["tipo"] ?></td>
                                     <td class="text-center"><a href="usuarios_editar/<?php echo $value["id_usuario"] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                        <button class="btn btn-danger btnEliminarUsuario" id_usuario=<?php echo $value["id_usuario"]; ?>><i class="fas fa-trash"></i></button>
+                                        <a class="btn btn-danger btnEliminarUsuario" id_usuario=<?php echo $value["id_usuario"]; ?>><i class="fas fa-trash"></i></a>
                                     </td>
 
                                 </tr>

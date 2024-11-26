@@ -115,6 +115,68 @@ class ControladorUsuarios
             }
         }
 
+        static public function ctrEditarUsuarios()
+        {
+            $tabla = "usuarios";
+    
+            if (isset($_POST["id_usuario"])) {
+                
+                    
+                $contra_encriptada = password_hash($_POST["contra"], PASSWORD_DEFAULT);
+    
+                $datos = array(
+                    "usuario" => $_POST["usuario"],
+                    "contrasena" => $contra_encriptada,
+                    "nombre" => $_POST["nombre"],
+                    "apellido" => $_POST["apellido"],
+                    "email" => $_POST["email"],
+                    "tipo_usuario" => $_POST["tipo"],
+                    "id_usuario" => $_POST["id_usuario"]
+    
+                );
+    
+                $respuesta = ModeloUsuarios::mdlEditarUsuarios($tabla, $datos);
+                
+                if ($respuesta == "ok") {
+                    header('Location: ' . ControladorPlantilla::url() . 'usuarios');
+                    exit;
+                } else {
+                    echo '<script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "Hubo un error al editar el usuario",
+                            text: "Por favor, inténtalo de nuevo",
+                            confirmButtonText: "Aceptar"
+                        });
+                    </script>';
+                }
+            }
+        }
+        static public function ctrEliminarUsuarios()
+        {
+            if (isset($_GET["id_usuario"])) {
+    
+                $tabla = "usuarios";
+                $datos = $_GET["id_usuario"];
+    
+                $respuesta = ModeloUsuarios::mdlEliminarUsuarios($tabla, $datos);
+    
+                if ($respuesta == "ok") {
+                    header('Location: ' . ControladorPlantilla::url() . 'usuarios');
+                    exit;
+                } else {
+                    echo '<script>
+                        Swal.fire({
+                            icon: "error",
+                            title: "Hubo un error al eliminar el usuario",
+                            text: "Por favor, inténtalo de nuevo",
+                            confirmButtonText: "Aceptar"
+                        });
+                    </script>';
+                }
+            }
+        }
+
     /*=============================================
     MOSTRAR USUARIOS
     =============================================*/
