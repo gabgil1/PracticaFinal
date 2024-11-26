@@ -42,23 +42,8 @@ $cantidad = count($habitaciones);
                                     <td class="text-center"> <?php echo $value["tipo"] ?> </td>
                                     <td class="text-center"> <?php echo $value["cantidad_pax"] ?></td>
                                     <td class="text-center"> $ <?php echo $value["tarifa"] ?></td>
-                                    <td class="text-center"
-                                        <?php
-                                        // Si el estado es 1 se pinta la celda de verda, si es 0 se pinta de rojo
-                                        if ($value["estadohab"] == 1) {
-                                            echo "style='background-color: #77a345; color: #FFFFFF'; font-weight: bold;";
-                                        } else {
-                                            echo "style='background-color: #FF0000; color: #FFFFFF'; font-weight: bold;";
-                                        }
-                                        ?>>
-                                        <?php
-                                        // Aca se muestra el estado con texto
-                                        if ($value["estadohab"] == 1) {
-                                            echo "Activo";
-                                        } else {
-                                            echo "Inactivo";
-                                        }
-                                        ?>
+                                    <td class="text-center"> <?php echo $value["estado"] ?>
+
                                     </td>
 
                                     <td class="text-center"><a href="habitaciones_editar/<?php echo $value['id_habitaciones'] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>

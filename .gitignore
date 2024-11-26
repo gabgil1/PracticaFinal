@@ -6,6 +6,7 @@ vistas/modulos/reservasnotas.txt
 vistas/modulos/clientes_agregar.php
 vistas/modulos/clientes_editar.php
 vistas/modulos/clientes.php
+vistas/modulos/Untitled-1.php
 
 modelos/clientes.modelo.php
 controladores/clientes.controlador.php

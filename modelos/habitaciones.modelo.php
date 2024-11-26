@@ -29,8 +29,8 @@ class ModeloHabitaciones
                                                                FROM habitaciones h
                                                                INNER JOIN tipo_habitaciones th
                                                                ON h.id_tipoHabitacion = th.id_tipoHab
-                                                               INNER JOIN estados e
-                                                               ON h.estado = e.id_estados
+                                                               INNER JOIN estado_habitaciones e
+                                                               ON h.estado = e.id_estadoHabitacion
                                                                ORDER BY numero ASC");
                 $habitaciones->execute();
 

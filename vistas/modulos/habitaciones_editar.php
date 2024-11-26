@@ -48,8 +48,9 @@ if ($habitacion) {
                             <div class="mb-1 col-8 mx-auto">
                                 <label for="estado" class="form-label">Estado</label>
                                 <select class="form-select" " name=" estado" id="example-select" required>
-                                    <option value="1" <?php if ($habitacion["estado"] == 1) echo 'selected'; ?>>Activo</option>
-                                    <option value="0" <?php if ($habitacion["estado"] == 0) echo 'selected'; ?>>Inactivo</option>
+                                    <option value="1" <?php if ($habitacion["estado"] == 1) echo 'selected'; ?>>Disponible</option>
+                                    <option value="2" <?php if ($habitacion["estado"] == 2) echo 'selected'; ?>>No disponible</option>
+                                    <option value="3" <?php if ($habitacion["estado"] == 3) echo 'selected'; ?>>En Mantenimiento</option>
                                 </select>
                             </div>
                         </div><!-- Fin col 2 -->
