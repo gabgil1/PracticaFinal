@@ -7,7 +7,7 @@ $url = ControladorPlantilla::url();
 <html lang="es">
 
 <head>
-    <?php if (isset($_SESSION["iniciarSesion"])) { ?>
+    
     <meta charset="utf-8" />
     <title>Gestión de reservas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,6 +64,7 @@ $url = ControladorPlantilla::url();
 <!-- body start -->
 
 <!-- <//?php if (isset($_SESSION["iniciarSesion"])) { ?> -->
+<?php if (isset($_SESSION["iniciarSesion"])) { ?>
 
 <body data-menu-color="dark" data-sidebar="default">
 

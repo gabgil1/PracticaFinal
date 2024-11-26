@@ -26,11 +26,11 @@ class ControladorUsuarios
                     $_SESSION["nombre"] = $respuesta["nombre"];
                     $_SESSION["apellido"] = $respuesta["apellido"];
                     $_SESSION["email"] = $respuesta["email"];
-                    $_SESSION["tipo_usuario"] = $respuesta["tipo_usuario"];
+                    $_SESSION["tipo_usuario"] = $respuesta["tipo"];
 
-                    // Redirigir al home
-                    header('Location: ' . ControladorPlantilla::url() . 'home');
-                    exit;
+                    echo '<script>
+                            window.location.href = "' . ControladorPlantilla::url() . 'home";
+                        </script>';
                 } else {
                     echo '<div class="alert alert-danger mt-3" role="alert">
                         Usuario o contraseña incorrectos
@@ -64,8 +64,9 @@ class ControladorUsuarios
                 $respuesta = ModeloUsuarios::mdlAgregarUsuarios($tabla, $datos);
 
                 if ($respuesta == "ok") {
-                    header('Location: ' . ControladorPlantilla::url() . 'usuarios');
-                    exit;
+                    echo '<script>
+                            window.location.href = "' . ControladorPlantilla::url() . 'usuarios";
+                        </script>';
                 } else {
                     echo '<div class="alert alert-danger mt-3" role="alert">
                         Error al registrar el usuario
@@ -95,14 +96,15 @@ class ControladorUsuarios
                     "email" => $_POST["email"],
                     "nombre" => $_POST["nombre"],
                     "apellido" => $_POST["apellido"],
-                    "tipo_usuario" => $_POST["tipo"]
+                    "tipo_usuario" => null
                 );
 
                 $respuesta = ModeloUsuarios::mdlAgregarUsuarios($tabla, $datos);
 
                 if ($respuesta == "ok") {
-                    header('Location: ' . ControladorPlantilla::url() . 'login');
-                    exit;
+                    echo '<script>
+                            window.location.href = "' . ControladorPlantilla::url() . 'login";
+                        </script>';
                 } else {
                     echo '<div class="alert alert-danger mt-3" role="alert">
                         Error al registrar el usuario
@@ -138,8 +140,9 @@ class ControladorUsuarios
                 $respuesta = ModeloUsuarios::mdlEditarUsuarios($tabla, $datos);
                 
                 if ($respuesta == "ok") {
-                    header('Location: ' . ControladorPlantilla::url() . 'usuarios');
-                    exit;
+                    echo '<script>
+                            window.location.href = "' . ControladorPlantilla::url() . 'usuarios";
+                        </script>';
                 } else {
                     echo '<script>
                         Swal.fire({
@@ -162,8 +165,9 @@ class ControladorUsuarios
                 $respuesta = ModeloUsuarios::mdlEliminarUsuarios($tabla, $datos);
     
                 if ($respuesta == "ok") {
-                    header('Location: ' . ControladorPlantilla::url() . 'usuarios');
-                    exit;
+                    echo '<script>
+                            window.location.href = "' . ControladorPlantilla::url() . 'usuarios";
+                        </script>';
                 } else {
                     echo '<script>
                         Swal.fire({
