@@ -39,7 +39,11 @@ $cantidad = count($usuarios);
                                     <td class="text-center"> <?php echo str_repeat('*', 5) ?></td> <!--oculta la contraseña y la limita a 5 *-->
                                     <td class="text-center"> <?php echo $value["tipo"] ?></td>
                                     <td class="text-center"><a href="usuarios_editar/<?php echo $value["id_usuario"] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-danger btnEliminarUsuario" id_usuario=<?php echo $value["id_usuario"]; ?>><i class="fas fa-trash"></i></a>
+                                    <button
+                                            class="btn btn-danger btnEliminar"
+                                            data-id="<?php echo $value["id_usuario"]; ?>"
+                                            data-modulo="habitacion"
+                                            id_usuario="<?php echo $value["id_usuario"]; ?>"><i class="fas fa-trash"></i></button>
                                     </td>
 
                                 </tr>
@@ -62,7 +66,7 @@ $cantidad = count($usuarios);
 
 <?php
 
-// $eliminar = new ModeloUsuarios();
-// $eliminar->ctrEliminarUsuario();
+$eliminar = new ControladorUsuarios();
+$eliminar->ctrEliminarUsuarios();
 
 ?>

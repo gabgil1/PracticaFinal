@@ -2,7 +2,7 @@ $(document).on("click", ".btnEliminar", function () {
   let id_item = $(this).data("id");
   let modulo = $(this).data("modulo");
   let pagina;
-  if (modulo === "especialidad" || modulo === "plan" || modulo === "entrenador") {
+  if (modulo === "usuario" || modulo === "plan" || modulo === "entrenador") {
     pagina = modulo + "es"; // Plural para especialidad, plan, o entrenador
     // console.log(pagina);
   } else {
