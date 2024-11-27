@@ -1,3 +1,5 @@
+
+
 <div class="app-sidebar-menu">
     <div class="h-100" data-simplebar>
 
@@ -32,6 +34,7 @@
                         <span> Home </span>
                     </a>
                 </li>
+                <?php if($_SESSION['tipo_usuario']  == 'Administrador' || $_SESSION["tipo_usuario"] == 'Conserje' ){ ?>
                 <li>
                     <a href="<?php echo $url; ?>huespedes">
                         <i data-feather="globe"></i>
@@ -44,8 +47,10 @@
                         <span> Habitaciones </span>
                     </a>
                 </li>
+                <?php } ?>
             </ul>
             <ul id="side-menu" class="ml-4">
+            <?php if($_SESSION['tipo_usuario'] == 'Administrador' || $_SESSION["tipo_usuario"] == 'Conserje' ){ ?>
                 <li class="menu-title">Gestión de reservas</li>
                 <li>
                     <a href="<?php echo $url; ?>checkin">
@@ -59,6 +64,7 @@
                         <span> Listado de reservas </span>
                     </a>
                 </li>
+                <?php } ?>
                 <li>
                     <a href="<?php echo $url; ?>reservas">
                         <i data-feather="aperture"></i>
@@ -66,7 +72,9 @@
                     </a>
                 </li>
             </ul>
+            
             <ul id="side-menu" class="ml-4">
+            <?php if($_SESSION['tipo_usuario']  == 'Administrador'){ ?>
                 <li class="menu-title">Administración</li>
                 <li>
                     <a href="<?php echo $url; ?>usuarios">
@@ -74,6 +82,7 @@
                         <span> Usuarios </span>
                     </a>
                 </li>
+                <?php } ?>
                 <li style="background-color: #ffb7bb; color: #fff; font-weight: bold;">
                     <a href="<?php echo $url; ?>salir">
                         <i data-feather="globe"></i>

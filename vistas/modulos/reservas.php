@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-12 ">
         <div class="card">
@@ -5,6 +6,17 @@
         </div>
     </div>
 </div>
+<?php
+session_start();
+
+if($_SESSION['tipo_usuario']=='Administrador'){
+    echo 'administrador';
+} elseif($_SESSION['tipo_usuario']=='Sin Tipo'){
+    echo 'hueped';
+} else{
+    echo 'conserje';
+}
+?>
 <div class="col-lg-12 mt-4">
     <div class="card">
 
