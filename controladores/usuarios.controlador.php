@@ -85,7 +85,6 @@ class ControladorUsuarios
     static public function ctrRegistrarUsuario()
     {
         if (isset($_POST["email"]) && isset($_POST["contra"]) && isset($_POST["usuario"])) {
-                $tabla = "usuarios";
 
                 // Encriptar la contraseña
                 $contra_encriptada = password_hash(trim($_POST["contra"]), PASSWORD_DEFAULT);
@@ -99,7 +98,14 @@ class ControladorUsuarios
                     "tipo_usuario" => null
                 );
 
-                $respuesta = ModeloUsuarios::mdlAgregarUsuarios($tabla, $datos);
+                $datosHuesped = array(
+                    "dni" => $_POST["dni"],
+                    "telefono" => $_POST["telefono"],
+                    "direccion" => $_POST["direccion"],
+                    "id_estado" => $_POST["estado"]
+                );
+
+                $respuesta = ModeloUsuarios::mdlAgregarUsuarios($datos, $datosHuesped);
 
                 if ($respuesta == "ok") {
                     echo '<script>
