@@ -54,12 +54,13 @@ class ModeloUsuarios
             $conexion->beginTransaction();
     
             // Insertar en la tabla usuarios
-            $stmtUsuario = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, email, tipo_usuario) 
-                                               VALUES (:usuario, :contrasena, :nombre, :apellido, :email, :tipo_usuario)");
+            $stmtUsuario = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, dni, email, tipo_usuario) 
+                                               VALUES (:usuario, :contrasena, :nombre, :apellido, :dni, :email, :tipo_usuario)");
             $stmtUsuario->bindParam(":usuario", $datosUsuario["usuario"], PDO::PARAM_STR);
             $stmtUsuario->bindParam(":contrasena", $datosUsuario["contrasena"], PDO::PARAM_STR);
             $stmtUsuario->bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
             $stmtUsuario->bindParam(":apellido", $datosUsuario["apellido"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":dni", $datosUsuario["dni"], PDO::PARAM_INT);
             $stmtUsuario->bindParam(":email", $datosUsuario["email"], PDO::PARAM_STR);
             $stmtUsuario->bindParam(":tipo_usuario", $datosUsuario["tipo_usuario"], PDO::PARAM_INT);
     
@@ -73,13 +74,13 @@ class ModeloUsuarios
             print_r($idUsuario);
     
             // Insertar en la tabla huespedes
-            $stmtHuesped = $conexion->prepare("INSERT INTO huespedes (dni, telefono, direccion, id_estado, id_usuario) 
-                                               VALUES (:dni, :telefono, :direccion, :id_estado, :id_usuario)");
-            $stmtHuesped->bindParam(":dni", $datosHuesped["dni"], PDO::PARAM_STR);
+            $stmtHuesped = $conexion->prepare("INSERT INTO huespedes (telefono, direccion, estado_id_estado, usuarios_id_usuarios) 
+                                               VALUES (:telefono, :direccion, :estado_id_estado, :usuarios_id_usuarios)");
+            
             $stmtHuesped->bindParam(":telefono", $datosHuesped["telefono"], PDO::PARAM_STR);
             $stmtHuesped->bindParam(":direccion", $datosHuesped["direccion"], PDO::PARAM_STR);
-            $stmtHuesped->bindParam(":id_estado", $datosHuesped["id_estado"], PDO::PARAM_INT);
-            $stmtHuesped->bindParam(":id_usuario", $idUsuario, PDO::PARAM_INT);
+            $stmtHuesped->bindParam(":estado_id_estado", $datosHuesped["estado_id_estado"], PDO::PARAM_INT);
+            $stmtHuesped->bindParam(":usuarios_id_usuarios", $idUsuario, PDO::PARAM_INT);
     
             if (!$stmtHuesped->execute()) {
                 $conexion->rollBack();

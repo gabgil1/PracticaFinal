@@ -95,14 +95,15 @@ class ControladorUsuarios
                     "email" => $_POST["email"],
                     "nombre" => $_POST["nombre"],
                     "apellido" => $_POST["apellido"],
-                    "tipo_usuario" => null
+                    "dni" => $_POST["dni"],
+                    "tipo_usuario" => 3
                 );
 
                 $datosHuesped = array(
-                    "dni" => $_POST["dni"],
+                    
                     "telefono" => $_POST["telefono"],
                     "direccion" => $_POST["direccion"],
-                    "id_estado" => $_POST["estado"]
+                    "estado_id_estado" => 1
                 );
 
                 $respuesta = ModeloUsuarios::mdlAgregarUsuarios($datos, $datosHuesped);

@@ -57,11 +57,7 @@
                                         <label for="direccion" class="form-label">Direccion</label>
                                         <input class="form-control" type="text" required="" id="direccion" name="direccion" placeholder="direccion">
                                     </div>
-
-                                    <div class="form-group mb-3">
-                                        <label for="estado" class="form-label">Estado</label>
-                                        <input class="form-control" type="number" required="" id="estado" name="estado" placeholder="estado">
-                                    </div>                                    
+                                  
 
                                     <div class="form-group mb-0 row">
                                         <div class="col-12">

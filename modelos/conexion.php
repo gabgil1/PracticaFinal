@@ -3,7 +3,7 @@
 class Conexion
 {
 	const HOST = "localhost";
-	const DBNAME = "complejo_db";
+	const DBNAME = "controlstockcom_amarillo";
 	const USER = "root";
 	const PASSWORD = "";
 	static public function conectar()
