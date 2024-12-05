@@ -47,7 +47,7 @@ $tipos = ControladorUsuarios::ctrMostrarTipoUsuario();
                 </div>
                 <div class="mb-1 col-4 mx-auto">
                     <label for="tipo" class="form-label">Tipo de usuario</label>
-                    <select class="form-select" name="tipo" id="tipo">
+                    <select class="form-control" name="tipo" id="tipo">
                         <option value="">Selecciona un Tipo</option>
                         <?php foreach ($tipos as $es => $value) { ?>
                             <option value="<?php echo (int)$value["id_tipoUsuarios"]; ?>"><?php echo $value["descripcion"]; ?></option>
