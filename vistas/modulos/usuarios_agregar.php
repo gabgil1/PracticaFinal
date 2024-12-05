@@ -10,7 +10,7 @@ $tipos = ControladorUsuarios::ctrMostrarTipoUsuario();
     <div class="card">
 
         <div class="card-header mx-auto">
-            <h2 class=" mb-0">Agregar usuario <img src="<?php echo $url; ?>vistas/assets/img/mancuerna.png" alt="Editar cliente" style="margin-left: 20px; width: 100px; vertical-align: middle;"></h2>
+            <h2 class=" mb-0">Agregar usuario</h2>
         </div><!-- end card header -->
 
         <div class="card-body">
@@ -36,6 +36,11 @@ $tipos = ControladorUsuarios::ctrMostrarTipoUsuario();
                         value="" required>
                 </div>
                 <div class="mb-1 col-4 mx-auto">
+                    <label for="dni" class="form-label">Dni</label>
+                    <input type="number" id="dni" name="dni" class="form-control" placeholder="dni"
+                        value="" required>
+                </div>
+                <div class="mb-1 col-4 mx-auto">
                     <label for="contra" class="form-label">Contraseña</label>
                     <input type="password" id="contra" name="contra" class="form-control" placeholder="************"
                         value="" required>
@@ -45,7 +50,7 @@ $tipos = ControladorUsuarios::ctrMostrarTipoUsuario();
                     <select class="form-select" name="tipo" id="tipo">
                         <option value="">Selecciona un Tipo</option>
                         <?php foreach ($tipos as $es => $value) { ?>
-                            <option value="<?php echo (int)$value["id_tipo"]; ?>"><?php echo $value["nombre"]; ?></option>
+                            <option value="<?php echo (int)$value["id_tipoUsuarios"]; ?>"><?php echo $value["descripcion"]; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -53,10 +58,11 @@ $tipos = ControladorUsuarios::ctrMostrarTipoUsuario();
 
                 $agregar = new ControladorUsuarios();
                 $agregar->ctrAgregarUsuario();
+                var_dump($agregar);
                 ?>
 
                 <div class="mt-2 col-4 mx-auto text-center">
-                    <a href="<?php echo $url; ?>/index.php?pagina=planes" class="btn btn-secondary">
+                    <a href="<?php echo $url; ?>usuarios" class="btn btn-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Regresar
                     </a>
                     <button class="btn btn-info btnEditaCliente justify-content-center" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>

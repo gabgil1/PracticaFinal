@@ -39,25 +39,24 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <label for="contra" class="form-label">Contraseña</label>
-                                        <input class="form-control" type="password" required="" id="contra" name="contra" placeholder="Ingrese su password">
+                                        <label for="contrasena" class="form-label">Contraseña</label>
+                                        <input class="form-control" type="password" required="" id="contrasena" name="contrasena" placeholder="Ingrese su password">
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="dni" class="form-label">Dni</label>
-                                        <input class="form-control" type="number" required="" id="dni" name="dni" placeholder="DNI">
+                                        <input class="form-control" type="text" required="" id="dni" name="dni" placeholder="DNI">
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="telefono" class="form-label">Telefono</label>
-                                        <input class="form-control" type="number" required="" id="telefono" name="telefono" placeholder="telefono">
+                                        <input class="form-control" type="telephone" required="" id="telefono" name="telefono" placeholder="telefono">
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="direccion" class="form-label">Direccion</label>
                                         <input class="form-control" type="text" required="" id="direccion" name="direccion" placeholder="direccion">
-                                    </div>
-                                  
+                                    </div>                              
 
                                     <div class="form-group mb-0 row">
                                         <div class="col-12">

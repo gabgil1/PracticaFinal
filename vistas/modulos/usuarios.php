@@ -21,6 +21,7 @@ $cantidad = count($usuarios);
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">apellido</th>
                                 <th class="text-center">Email</th>
+                                <th class="text-center">Dni</th>
                                 <th class="text-center">Contraseña</th>
                                 <th class="text-center">tipo usuario</th>
                                 <th class="text-center">Acciones</th>
@@ -36,6 +37,7 @@ $cantidad = count($usuarios);
                                     <td class="text-center"> <?php echo $value["nombre"] ?> </td>
                                     <td class="text-center"> <?php echo $value["apellido"] ?></td>
                                     <td class="text-center"> <?php echo $value["email"] ?></td>
+                                    <td class="text-center"> <?php echo $value["dni"] ?></td>
                                     <td class="text-center"> <?php echo str_repeat('*', 5) ?></td> <!--oculta la contraseña y la limita a 5 *-->
                                     <td class="text-center"> <?php echo $value["tipo"] ?></td>
                                     <td class="text-center"><a href="usuarios_editar/<?php echo $value["id_usuario"] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>

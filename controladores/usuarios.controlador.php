@@ -11,7 +11,7 @@ class ControladorUsuarios
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
+        var_dump($_SESSION);
         if (isset($_POST["email"]) && isset($_POST["contra"])) {
             // Validar el formato del email
             if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
@@ -20,13 +20,15 @@ class ControladorUsuarios
                 $respuesta = ModeloUsuarios::mdlMostrarUsuarios($item, $valor);
 
                 if ($respuesta && password_verify(trim($_POST["contra"]), $respuesta["contrasena"])) {
+                    var_dump($respuesta);
                     // Establecer variables de sesión
                     $_SESSION["iniciarSesion"] = "ok";
-                    $_SESSION["id_usuario"] = $respuesta["id_usuario"];
+                    $_SESSION["id_usuarios"] = $respuesta["id_usuarios"];
                     $_SESSION["nombre"] = $respuesta["nombre"];
                     $_SESSION["apellido"] = $respuesta["apellido"];
                     $_SESSION["email"] = $respuesta["email"];
-                    $_SESSION["tipo_usuario"] = $respuesta["tipo"];
+                    $_SESSION["tipo_usuario"] = $respuesta["tipoUsuario"];
+                    
 
                     echo '<script>
                             window.location.href = "' . ControladorPlantilla::url() . 'home";
@@ -58,10 +60,11 @@ class ControladorUsuarios
                     "email" => $_POST["email"],
                     "nombre" => $_POST["nombre"],
                     "apellido" => $_POST["apellido"],
+                    "dni" => $_POST["dni"],
                     "tipo_usuario" => $_POST["tipo"]
                 );
 
-                $respuesta = ModeloUsuarios::mdlAgregarUsuarios($tabla, $datos);
+                $respuesta = ModeloUsuarios::mdlAgregarUsuarios($datos);
 
                 if ($respuesta == "ok") {
                     echo '<script>
@@ -84,44 +87,48 @@ class ControladorUsuarios
     =============================================*/
     static public function ctrRegistrarUsuario()
     {
-        if (isset($_POST["email"]) && isset($_POST["contra"]) && isset($_POST["usuario"])) {
+       // Verificar si el formulario ha sido enviado
+       if (isset($_POST["email"]) && isset($_POST["contrasena"]) && isset($_POST["usuario"])) {
+        // var_dump($_POST);
+        // Validar el formato del email
+        if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
 
-                // Encriptar la contraseña
-                $contra_encriptada = password_hash(trim($_POST["contra"]), PASSWORD_DEFAULT);
+            // Encriptar la contraseña
+            $contra_encriptada = password_hash(trim($_POST["contrasena"]), PASSWORD_DEFAULT);
 
-                $datos = array(
-                    "usuario" => $_POST["usuario"],
-                    "contrasena" => $contra_encriptada,
-                    "email" => $_POST["email"],
-                    "nombre" => $_POST["nombre"],
-                    "apellido" => $_POST["apellido"],
-                    "dni" => $_POST["dni"],
-                    "tipo_usuario" => 3
-                );
+            $datos = array(
+                "usuario" => $_POST["usuario"],
+                "email" => $_POST["email"],
+                "nombre" => $_POST["nombre"],
+                "apellido" => $_POST["apellido"],
+                "contrasena" => $contra_encriptada,
+                "dni" => $_POST["dni"],
+                "telefono" => $_POST["telefono"],
+                "direccion" => $_POST["direccion"],
+                "estado" => 1,
+                "tipo_usuario" => 3
+            );
 
-                $datosHuesped = array(
-                    
-                    "telefono" => $_POST["telefono"],
-                    "direccion" => $_POST["direccion"],
-                    "estado_id_estado" => 1
-                );
+            // Llamada al modelo para agregar el usuario
+            $respuesta = ModeloUsuarios::mdlRegistrarUsuarios($datos);
 
-                $respuesta = ModeloUsuarios::mdlAgregarUsuarios($datos, $datosHuesped);
-
-                if ($respuesta == "ok") {
-                    echo '<script>
-                            window.location.href = "' . ControladorPlantilla::url() . 'login";
-                        </script>';
-                } else {
-                    echo '<div class="alert alert-danger mt-3" role="alert">
-                        Error al registrar el usuario
-                    </div>';
-                }
+            // Redirigir si la respuesta es ok
+            if ($respuesta == "ok") {
+                echo '<script>
+                        window.location.href = "' . ControladorPlantilla::url() . 'login";
+                    </script>';
             } else {
                 echo '<div class="alert alert-danger mt-3" role="alert">
-                    Formato de email no válido
+                    Error al registrar el usuario
                 </div>';
             }
+        } else {
+            // Si el email no es válido, mostrar el mensaje de error
+            echo '<div class="alert alert-danger mt-3" role="alert">
+                Formato de email no válido
+            </div>';
+        }
+    }
         }
 
         static public function ctrEditarUsuarios()

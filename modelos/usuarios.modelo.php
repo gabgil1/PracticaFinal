@@ -9,7 +9,19 @@ class ModeloUsuarios
     {
         if ($item != null) {
             try {
-                $stmt = Conexion::conectar()->prepare("SELECT u.id_usuario, u.usuario, u.nombre, u.apellido, u.email, u.contrasena, IFNULL(t.nombre, 'Sin Tipo') AS tipo FROM usuarios AS u LEFT JOIN tipos_usuarios AS t ON t.id_tipo = u.tipo_usuario WHERE $item = :$item");
+                $stmt = Conexion::conectar()->prepare("SELECT 
+                                        u.id_usuarios, u.contrasena, u.nombre, u.apellido, u.dni, u.email, u.tipo_usuario, t.descripcion as tipoUsuario, 
+                                        h.telefono, h.direccion, h.usuarios_id_usuarios, h.id_huespedes
+                                            -- IFNULL(H.telefono, '') AS telefono,
+                                            -- IFNULL(H.direccion, '') AS direccion,
+                                            -- IFNULL(H.estado_id_estado, '') AS estado_id_estado
+                                        FROM 
+                                        usuarios AS u
+                                        INNER JOIN 
+                                        tipo_usuarios AS t ON t.id_tipoUsuarios = u.tipo_usuario
+                                        LEFT JOIN 
+                                        huespedes AS h ON h.usuarios_id_usuarios = u.id_usuarios
+                                         WHERE $item = :$item");
                 //enlace de parametros
                 $stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
@@ -22,8 +34,8 @@ class ModeloUsuarios
         } else {
 
             try {
-                $usuarios = Conexion::conectar()->prepare("SELECT u.id_usuario, u.usuario, u.nombre, u.apellido, u.email, u.contrasena, IFNULL(t.nombre, 'Sin Tipo') AS tipo FROM usuarios AS u LEFT JOIN tipos_usuarios AS t ON t.id_tipo = u.tipo_usuario;
-                ");
+                $usuarios = Conexion::conectar()->prepare("SELECT u.id_usuarios, u.usuario, u.nombre, u.apellido, u.email, u.contrasena, u.dni, u.tipo_usuario, t.descripcion AS tipo FROM usuarios AS u 
+                LEFT JOIN tipo_usuarios AS t ON t.id_tipoUsuarios = u.tipo_usuario");
                 $usuarios->execute();
 
                 return $usuarios->fetchAll(PDO::FETCH_ASSOC);
@@ -36,7 +48,7 @@ class ModeloUsuarios
     static public function mdlMostrarTipoUsuario()
     {
         try {
-            $usuarios = Conexion::conectar()->prepare("SELECT * FROM tipos_usuarios");
+            $usuarios = Conexion::conectar()->prepare("SELECT * FROM tipo_usuarios");
             $usuarios->execute();
 
             return $usuarios->fetchAll(PDO::FETCH_ASSOC);
@@ -46,55 +58,94 @@ class ModeloUsuarios
         
     }
 
-    static public function mdlAgregarUsuarios($datosUsuario, $datosHuesped)
+    static public function mdlAgregarUsuarios($datos)
     {
         try {
             // Iniciar la conexión y la transacción
             $conexion = Conexion::conectar();
             $conexion->beginTransaction();
-    
+
             // Insertar en la tabla usuarios
-            $stmtUsuario = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, dni, email, tipo_usuario) 
-                                               VALUES (:usuario, :contrasena, :nombre, :apellido, :dni, :email, :tipo_usuario)");
-            $stmtUsuario->bindParam(":usuario", $datosUsuario["usuario"], PDO::PARAM_STR);
-            $stmtUsuario->bindParam(":contrasena", $datosUsuario["contrasena"], PDO::PARAM_STR);
-            $stmtUsuario->bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
-            $stmtUsuario->bindParam(":apellido", $datosUsuario["apellido"], PDO::PARAM_STR);
-            $stmtUsuario->bindParam(":dni", $datosUsuario["dni"], PDO::PARAM_INT);
-            $stmtUsuario->bindParam(":email", $datosUsuario["email"], PDO::PARAM_STR);
-            $stmtUsuario->bindParam(":tipo_usuario", $datosUsuario["tipo_usuario"], PDO::PARAM_INT);
-    
+            $stmtUsuario = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, email, tipo_usuario, dni) 
+                                           VALUES (:usuario, :contrasena, :nombre, :apellido, :email, :tipo_usuario, :dni)");
+            $stmtUsuario->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":contrasena", $datos["contrasena"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":apellido", $datos["apellido"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":email", $datos["email"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":tipo_usuario", $datos["tipo_usuario"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":dni", $datos["dni"], PDO::PARAM_STR);
+
+            // Ejecutar y verificar si hubo un error
             if (!$stmtUsuario->execute()) {
                 $conexion->rollBack();
-                return "error_usuario";
+                $errorInfo = $stmtUsuario->errorInfo();
+                return "Error al insertar usuario: " . $errorInfo[2];  // Devuelve el mensaje de error
             }
-    
-            // Obtener el ID del usuario recién insertado
-            $idUsuario = $conexion->lastInsertId();
-            print_r($idUsuario);
-    
-            // Insertar en la tabla huespedes
-            $stmtHuesped = $conexion->prepare("INSERT INTO huespedes (telefono, direccion, estado_id_estado, usuarios_id_usuarios) 
-                                               VALUES (:telefono, :direccion, :estado_id_estado, :usuarios_id_usuarios)");
-            
-            $stmtHuesped->bindParam(":telefono", $datosHuesped["telefono"], PDO::PARAM_STR);
-            $stmtHuesped->bindParam(":direccion", $datosHuesped["direccion"], PDO::PARAM_STR);
-            $stmtHuesped->bindParam(":estado_id_estado", $datosHuesped["estado_id_estado"], PDO::PARAM_INT);
-            $stmtHuesped->bindParam(":usuarios_id_usuarios", $idUsuario, PDO::PARAM_INT);
-    
-            if (!$stmtHuesped->execute()) {
-                $conexion->rollBack();
-                return "error_huesped";
-            }
-    
+
             // Confirmar la transacción
             $conexion->commit();
             return "ok";
-    
         } catch (PDOException $e) {
+            // Capturar cualquier excepción y hacer rollback
             $conexion->rollBack();
-            return "Error: " . $e->getMessage();
+            return "Error en la transacción: " . $e->getMessage();
         }
+        
+    }
+
+    static public function mdlRegistrarUsuarios($datos)
+    {
+        try {
+            // Iniciar la conexión y la transacción
+            $conexion = Conexion::conectar();
+            $conexion->beginTransaction();
+
+            // Insertar en la tabla usuarios
+            $stmtUsuario = $conexion->prepare("INSERT INTO usuarios (usuario, contrasena, nombre, apellido, email, tipo_usuario, dni) 
+                                           VALUES (:usuario, :contrasena, :nombre, :apellido, :email, :tipo_usuario, :dni)");
+            $stmtUsuario->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":contrasena", $datos["contrasena"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":apellido", $datos["apellido"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":email", $datos["email"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":tipo_usuario", $datos["tipo_usuario"], PDO::PARAM_STR);
+            $stmtUsuario->bindParam(":dni", $datos["dni"], PDO::PARAM_STR);
+
+            // Ejecutar y verificar si hubo un error
+            if (!$stmtUsuario->execute()) {
+                $conexion->rollBack();
+                $errorInfo = $stmtUsuario->errorInfo();
+                return "Error al insertar usuario: " . $errorInfo[2];  // Devuelve el mensaje de error
+            }
+
+            // Obtener el ID del usuario recién insertado
+            $idUsuario = $conexion->lastInsertId();
+
+            // Insertar en la tabla huespedes
+            $stmtHuesped = $conexion->prepare("INSERT INTO huespedes (telefono, direccion, estado_id_estado, usuarios_id_usuarios) 
+                                           VALUES (:telefono, :direccion, :id_estado, :id_usuario)");
+            $stmtHuesped->bindParam(":telefono", $datos["telefono"], PDO::PARAM_STR);
+            $stmtHuesped->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
+            $stmtHuesped->bindParam(":id_estado", $datos["estado"], PDO::PARAM_INT);
+            $stmtHuesped->bindParam(":id_usuario", $idUsuario, PDO::PARAM_INT);
+
+            // Ejecutar y verificar si hubo un error
+            if (!$stmtHuesped->execute()) {
+                $conexion->rollBack();
+                $errorInfo = $stmtHuesped->errorInfo();
+                return "Error al insertar huesped: " . $errorInfo[2];  // Devuelve el mensaje de error
+            }
+
+            // Confirmar la transacción
+            $conexion->commit();
+            return "ok";
+        } catch (PDOException $e) {
+            // Capturar cualquier excepción y hacer rollback
+            $conexion->rollBack();
+            return "Error en la transacción: " . $e->getMessage();
+        }
+        
     }
 
     static public function mdlEditarUsuarios($tabla, $datos)
