@@ -31,6 +31,7 @@ $cantidad = count($usuarios);
                             <?php
 
                             foreach ($usuarios as $key => $value) {
+                                if ($value["tipo"] == 'Administrador' || $value["tipo"] == 'Conserje') { 
                             ?>
                                 <tr style="background-color:#000888">
                                     <td class="text-center"> <?php echo $value["usuario"] ?></td>
@@ -52,7 +53,8 @@ $cantidad = count($usuarios);
 
                                 <input type="hidden" id="url" value="<?php echo $url; ?>">
 
-                            <?php } ?>
+                            <?php } 
+                        } ?>
 
                         </tbody>
                     </table>
