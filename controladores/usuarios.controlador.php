@@ -1,5 +1,10 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+
 class ControladorUsuarios
 {
     /*=============================================
@@ -206,6 +211,39 @@ class ControladorUsuarios
     static public function ctrMostrarTipoUsuario()
     {
         return ModeloUsuarios::mdlMostrarTipoUsuario();
+    }
+
+    static public function ctrEnviarMailRegistro()
+    {
+        require 'PHPMailer-master\src\PHPMailer.php';
+        require 'PHPMailer-master\src\SMTP.php';
+        require 'PHPMailer-master\src\Exception.php';
+
+        $mail = new PHPMailer(True);
+
+        try {
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'hotelapart184@gmail.com';
+            $mail->Password = 'emiz zzub yeji gvkp';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom('hotelapart184@gmail.com', 'Hotel Apart');
+            $mail->addAddress('apariciojc807@gmail.com', 'el juan');
+            $mail->addCC('apariciojc807@gmail.com');
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Prubass';
+            $mail->Body = 'Esta es una prueba anaseh';
+            $mail->send();
+
+            return 'Correo enviado';
+        } catch (Exception $e) {
+            return 'Mensaje '. $mail->ErrorInfo;
+        }
     }
 }
 ?>
