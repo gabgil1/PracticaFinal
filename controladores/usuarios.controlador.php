@@ -119,6 +119,7 @@ class ControladorUsuarios
 
             // Redirigir si la respuesta es ok
             if ($respuesta == "ok") {
+                $email = ControladorUsuarios::ctrEnviarMailRegistro($datos["email"]);
                 echo '<script>
                         window.location.href = "' . ControladorPlantilla::url() . 'login";
                     </script>';
@@ -200,9 +201,6 @@ class ControladorUsuarios
             }
         }
 
-    /*=============================================
-    MOSTRAR USUARIOS
-    =============================================*/
     static public function ctrMostrarUsuarios($item, $valor)
     {
         return ModeloUsuarios::mdlMostrarUsuarios($item, $valor);
@@ -213,7 +211,41 @@ class ControladorUsuarios
         return ModeloUsuarios::mdlMostrarTipoUsuario();
     }
 
-    static public function ctrEnviarMailRegistro()
+    static public function ctrBuscarMail($email){
+        $resultado = ModeloUsuarios::mdlBuscarEmail($email);
+        if ($resultado) {
+            var_dump($resultado);
+            return $resultado; // Usuario encontrado.
+        } else {
+            return null; // Usuario no encontrado.
+        }
+    }
+
+    static public function ctrActualizarContrasena($email, $nuevaContrasena){
+        $contra_encriptada = password_hash(trim($nuevaContrasena), PASSWORD_DEFAULT);
+        $respuesta = ModeloUsuarios::ActualizarContrasena($email, $contra_encriptada);
+
+        if ($respuesta == "ok") {
+            echo '<script>
+                    window.location.href = "' . ControladorPlantilla::url() . 'login";
+                </script>';
+        } else {
+            echo '<script>
+                Swal.fire({
+                    icon: "error",
+                    title: "Hubo un error al eliminar el usuario",
+                    text: "Por favor, inténtalo de nuevo",
+                    confirmButtonText: "Aceptar"
+                });
+            </script>';
+        }
+    }
+
+    static public function ctrGenerarCodigo(){
+        return str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+    }
+
+    static public function ctrEnviarMailRegistro($valor)
     {
         require 'PHPMailer-master\src\PHPMailer.php';
         require 'PHPMailer-master\src\SMTP.php';
@@ -232,12 +264,42 @@ class ControladorUsuarios
             $mail->Port = 587;
 
             $mail->setFrom('hotelapart184@gmail.com', 'Hotel Apart');
-            $mail->addAddress('apariciojc807@gmail.com', 'el juan');
-            $mail->addCC('apariciojc807@gmail.com');
+            $mail->addAddress($valor);
 
             $mail->isHTML(true);
-            $mail->Subject = 'Prubass';
-            $mail->Body = 'Esta es una prueba anaseh';
+            $mail->Subject = 'Registro';
+            $mail->Body = 'Se ha registrado correctamente';
+            $mail->send();
+
+            return 'Correo enviado';
+        } catch (Exception $e) {
+            return 'Mensaje '. $mail->ErrorInfo;
+        }
+    }
+
+    static public function ctrEnviarCodigo($email, $codigo)
+    {
+        require 'PHPMailer-master\src\PHPMailer.php';
+        require 'PHPMailer-master\src\SMTP.php';
+        require 'PHPMailer-master\src\Exception.php';
+
+        $mail = new PHPMailer(True);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'hotelapart184@gmail.com';
+            $mail->Password = 'emiz zzub yeji gvkp';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom('hotelapart184@gmail.com', 'Hotel Apart');
+            $mail->addAddress($email);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Codigo de verificacion '. $codigo;
+            $mail->Body = 'Su código de verificación es: '. $codigo;
             $mail->send();
 
             return 'Correo enviado';

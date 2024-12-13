@@ -3,10 +3,6 @@
         <div class="col-12">
             <div class="card text-center">
                 <h1 class="mt-3">Home</h1>
-                <?php 
-                    $respuesta = ControladorUsuarios::ctrEnviarMailRegistro();
-                    var_dump($respuesta);           
-                ?>
                 <div class="card-header">
                     <img src="<?php echo $url; ?>vistas/assets/img/logo.png" style="width: 45%;" alt="">
                 </div>

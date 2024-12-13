@@ -176,6 +176,8 @@ $url = ControladorPlantilla::url();
      // Sistema para mostrar login o signup según la URL.
         if (isset($_GET["pagina"]) && $_GET["pagina"] === "signup") {
             include "vistas/modulos/signup.php";
+        } elseif (isset($_GET["pagina"]) && $_GET["pagina"] === "recuperar_contra") {
+            include "vistas/modulos/recuperar_contra.php";
         } else {
             include "vistas/modulos/login.php";
         }

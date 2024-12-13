@@ -39,6 +39,9 @@
                                     <div class="text-center mt-3">
                                         <p class="mb-0">¿No tienes una cuenta? <a href="?pagina=signup" class="text-primary">Regístrate aquí</a></p>
                                     </div>
+                                    <div class="text-center mt-3">
+                                        <p class="mb-0">¿Se ha olvidado la contraseña? <a href="?pagina=recuperar_contra" class="text-primary">Recupere su contraseña aquí</a></p>
+                                    </div>
 
                                     <?php
                                     $ingreso = new ControladorUsuarios();

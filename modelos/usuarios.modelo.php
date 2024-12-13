@@ -58,6 +58,38 @@ class ModeloUsuarios
         
     }
 
+    static public function mdlBuscarEmail($email){
+        try {
+            $conexion = Conexion::conectar();
+            $stmt = $conexion->prepare("SELECT * FROM usuarios WHERE email = :email");
+            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna solo un usuario, no una lista.
+        } catch (Exception $e) {
+            return "Error: " . $e->getMessage();
+        }
+    }
+
+    static public function ActualizarContrasena($email, $nuevaContrasena){
+        try {
+            $conexion = Conexion::conectar();
+    
+            $stmt = $conexion->prepare("UPDATE usuarios SET contrasena = :contrasena WHERE email = :email");
+    
+            $stmt->bindParam(":contrasena", $nuevaContrasena, PDO::PARAM_STR);
+            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+    
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                return 'ok'; // Devuelve true si la actualización fue exitosa
+            } 
+        } catch (Exception $e) {
+            // Manejo de errores
+            return "Error: " . $e->getMessage();
+        }
+    }
+
     static public function mdlAgregarUsuarios($datos)
     {
         try {
